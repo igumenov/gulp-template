@@ -1,0 +1,19 @@
+{
+  "name": "Gulp_Template",
+  "version": "1.0.0",
+  "authors": [
+    "Rutger Laurman <info@lekkerduidelijk.nl>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "modernizr": "~3.2.0",
+    "normalize-css": "~3.0.3"
+  }
+}
