@@ -1,3 +1,17 @@
+/**
+ * Gulp File
+ *
+ * @author: Rutger Laurman - lekkerduidelijk.nl
+ * @url: https://github.com/lekkerduidelijk/gulp-template
+ *
+ * @TODO:
+ * - Add media task
+ * - Add UnCSS task
+ * - Add banner task
+ * - Add Grunticon task
+ * - Investigate subtasks / separate files
+ */
+
 /* ==========================================================================
    Load dependencies
    ========================================================================== */
@@ -41,8 +55,11 @@ gulp.task('copy', function(){
     '!'+dirs.src +'/assets/js/**'
 
   ])
-    .pipe(gulp.dest(dirs.dist));
-    // .pipe(plugins.notify("Copy complete"));
+
+  // Notify on error
+  .pipe(plugins.plumber({errorHandler: plugins.notify.onError("COPY: <%= error.message %>")}))
+
+  .pipe(gulp.dest(dirs.dist));
 
 });
 
@@ -53,22 +70,24 @@ gulp.task('copy', function(){
 gulp.task('less', function () {
   return gulp.src(dirs.src + '/assets/less/style.less')
 
-    // Less
-    .pipe(plugins.less())
+  // Notify on error
+  .pipe(plugins.plumber({errorHandler: plugins.notify.onError("LESS: <%= error.message %>")}))
 
-    // Autoprefixer
-    .pipe(plugins.autoprefixer())
-    .pipe(plugins.rename('style.full.css'))
-    .pipe(gulp.dest(dirs.dist + '/assets/css/'))
+  // Less
+  .pipe(plugins.less())
 
-    // Minify
-    .pipe(plugins.minifyCss())
-    .pipe(plugins.rename('style.css'))
-    .pipe(gulp.dest(dirs.dist + '/assets/css/'))
+  // Autoprefixer
+  .pipe(plugins.autoprefixer())
+  .pipe(plugins.rename('style.full.css'))
+  .pipe(gulp.dest(dirs.dist + '/assets/css/'))
 
-    // Notify
-    .pipe(plugins.notify("Less complete"));
+  // Minify
+  .pipe(plugins.minifyCss())
+  .pipe(plugins.rename('style.css'))
+  .pipe(gulp.dest(dirs.dist + '/assets/css/'))
 
+  // Notify
+  .pipe(plugins.notify("LESS complete"));
 
 });
 
@@ -88,6 +107,9 @@ gulp.task('js', function(){
     dirs.src + '/assets/js/main.js'
   ])
 
+  // Notify on error
+  .pipe(plugins.plumber({errorHandler: plugins.notify.onError("JS: <%= error.message %>")}))
+
   // Concat
   .pipe(plugins.concat('all.full.js'))
   .pipe(gulp.dest(dirs.dist + '/assets/js/'))
@@ -100,27 +122,18 @@ gulp.task('js', function(){
   // Notify
   .pipe(plugins.notify("JS complete"));
 
-
-
 });
-
-/* Notify
-   ========================================================================== */
-
-
 
 
 /* Watch
    ========================================================================== */
 
 gulp.task('watch', function () {
-    gulp.watch(dirs.src + '/assets/js/**/*.js', ['js']);
-    gulp.watch(dirs.src + '/assets/less/**/*.less', ['less']);
-    gulp.watch(dirs.src + '/*.html', ['build']);
-    plugins.livereload.listen();
-    gulp.watch(dirs.dist + '/**/*').on('change', plugins.livereload.changed);
-    plugins.notify("Watching...");
-
+  gulp.watch(dirs.src + '/assets/js/**/*.js', ['js']);
+  gulp.watch(dirs.src + '/assets/less/**/*.less', ['less']);
+  gulp.watch(dirs.src + '/*.html', ['build']);
+  plugins.livereload.listen();
+  gulp.watch(dirs.dist + '/**/*').on('change', plugins.livereload.changed);
 });
 
 /* ==========================================================================
@@ -139,19 +152,16 @@ gulp.task('default', function (done){
 
 gulp.task('build', function (done) {
     runSequence(
-        'clean',
-        'copy',
-        ['less', 'js'],
-        done);
-  // plugins.notify("Build complete");
-
+      'clean',
+      'copy',
+      ['less', 'js'],
+      done);
 });
 
 
-
-/* Comments
-   ========================================================================== */
-
+/*
+  Note:   Original flow from Gruntfile
+*/
 
 // Stylesheets
 // less
@@ -159,7 +169,6 @@ gulp.task('build', function (done) {
 // uncss
 // cssmin
 // notify
-
 
 // Scripts
 // concat
@@ -181,4 +190,3 @@ gulp.task('build', function (done) {
 // media
 // usebanner
 // notify
-
