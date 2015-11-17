@@ -33,19 +33,15 @@ Stuck? Make sure to update to the latest <code>node</code> and <code>npm</code> 
   * Bootstrap
   * Modernizr
   * Normalize CSS
-* Grunt
+* Gulp
   * Autoprefixer
-  * Banner
-  * Connect
-  * CSS Min
-  * Image Min
-  * LESS
+  * Concat
+  * Less
+  * Livereload
+  * Load-plugins
+  * Minify CSS
   * Notify
+  * Rename
   * Uglify
-  * UnCSS
-  * SVG Min
+  * Util
   * Watch
-
-
-
-

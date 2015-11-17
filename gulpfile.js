@@ -42,6 +42,8 @@ gulp.task('copy', function(){
 
   ])
     .pipe(gulp.dest(dirs.dist));
+    // .pipe(plugins.notify("Copy complete"));
+
 });
 
 /* Stylesheets
@@ -62,7 +64,11 @@ gulp.task('less', function () {
     // Minify
     .pipe(plugins.minifyCss())
     .pipe(plugins.rename('style.css'))
-    .pipe(gulp.dest(dirs.dist + '/assets/css/'));
+    .pipe(gulp.dest(dirs.dist + '/assets/css/'))
+
+    // Notify
+    .pipe(plugins.notify("Less complete"));
+
 
 });
 
@@ -89,9 +95,19 @@ gulp.task('js', function(){
   // Uglify
   .pipe(plugins.uglify().on('error', plugins.util.log))
   .pipe(plugins.rename('all.js'))
-  .pipe(gulp.dest(dirs.dist + '/assets/js/'));
+  .pipe(gulp.dest(dirs.dist + '/assets/js/'))
+
+  // Notify
+  .pipe(plugins.notify("JS complete"));
+
+
 
 });
+
+/* Notify
+   ========================================================================== */
+
+
 
 
 /* Watch
@@ -103,6 +119,8 @@ gulp.task('watch', function () {
     gulp.watch(dirs.src + '/*.html', ['build']);
     plugins.livereload.listen();
     gulp.watch(dirs.dist + '/**/*').on('change', plugins.livereload.changed);
+    plugins.notify("Watching...");
+
 });
 
 /* ==========================================================================
@@ -125,6 +143,8 @@ gulp.task('build', function (done) {
         'copy',
         ['less', 'js'],
         done);
+  // plugins.notify("Build complete");
+
 });
 
 
