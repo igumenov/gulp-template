@@ -115,7 +115,7 @@ gulp.task('js', function(){
   .pipe(gulp.dest(dirs.dist + '/assets/js/'))
 
   // Uglify
-  .pipe(plugins.uglify().on('error', plugins.util.log))
+  .pipe(plugins.uglify())
   .pipe(plugins.rename('all.js'))
   .pipe(gulp.dest(dirs.dist + '/assets/js/'))
 
