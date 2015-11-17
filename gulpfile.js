@@ -96,27 +96,18 @@ gulp.task('less', function () {
    ========================================================================== */
 
 gulp.task('js', function(){
-  return gulp.src([
-
-    'bower_components/jquery/dist/jquery.js',
-
-    // Add more libraries here
-    // 'bower_components/...',
-
-    dirs.src + '/assets/js/module/**/*.js',
-    dirs.src + '/assets/js/main.js'
-  ])
+  return gulp.src(dirs.src +'/assets/js/app.js')
 
   // Notify on error
   .pipe(plugins.plumber({errorHandler: plugins.notify.onError("JS: <%= error.message %>")}))
 
-  // Concat
-  .pipe(plugins.concat('all.full.js'))
+  // Include files
+  .pipe(plugins.include())
   .pipe(gulp.dest(dirs.dist + '/assets/js/'))
 
   // Uglify
   .pipe(plugins.uglify())
-  .pipe(plugins.rename('all.js'))
+  .pipe(plugins.rename('app.min.js'))
   .pipe(gulp.dest(dirs.dist + '/assets/js/'))
 
   // Notify
