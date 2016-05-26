@@ -82,7 +82,7 @@ gulp.task('less', function () {
   .pipe(gulp.dest(dirs.dist + '/assets/css/'))
 
   // Minify
-  .pipe(plugins.minifyCss())
+  .pipe(plugins.cleanCss())
   .pipe(plugins.rename('style.css'))
   .pipe(gulp.dest(dirs.dist + '/assets/css/'))
 
